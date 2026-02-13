@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="search.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Search Jobs - Job-Portal</title>
+</head>
+<body>
+    <header class="main-header">
+        <div class="nav-container">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <!-- Logo -->
+            <a href="home.html" class="logo">
+                <img src="/img/job-portal-logo.jpg" alt="job-portal">
+                Job-Portal
+            </a>
+
+            <!-- Navigation Menu -->
+            <ul id="navMenu">
+                <div class="close-menu">
+                    <span><i class="fas fa-times"></i> CLOSE</span>
+                </div>
+                <li><a href="home.html" class="nav-a">Home</a></li>
+
+                <li class="category">
+                    <a href="#" class="nav-a">
+                        Category <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                    <div class="category-dropdown">
+                        <a href="filter-category.html?category=it-software">IT & Software</a>
+                        <a href="filter-category.html?category=marketing">Marketing</a>
+                        <a href="filter-category.html?category=finance">Finance</a>
+                        <a href="filter-category.html?category=design">Design</a>
+                    </div>
+                </li>
+
+                <li class="Employment-Type">
+                    <a href="#" class="nav-a">
+                        Employment-Type <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                    <div class="Employment-Type-dropdown">
+                        <a href="filter-type.html?type=fulltime">Full-time</a>
+                        <a href="filter-type.html?type=parttime">Part-time</a>
+                        <a href="filter-type.html?type=remote">Remote</a>
+                        <a href="filter-type.html?type=internship">Internship</a>
+                    </div>
+                </li>
+
+                <li><a href="filter.html?filter=featured" class="nav-a">Featured</a></li>
+                <li><a href="filter.html?filter=urgent" class="nav-a">Urgent</a></li>
+            </ul>
+            
+            <div class="search">
+                <input type="text" id="searchInput" placeholder="Search jobs...">
+                <button class="search-btn">Search</button>
+            </div>
+            
+
+        </div>
+    </header>
+
+    <main class="main">
+        <div id="searchKeyword" class="search-keyword" style="display: none;">
+            <h2>Search results for: <strong id="keywordText"></strong></h2>
+        </div>
+        <p class="job-p">Find your perfect job by searching through our database</p>
+        
+    
+        
+        
+        
+        <div id="jobsContainer" class="jobs-grid">
+            <!-- Search results will be loaded here -->
+        </div>
+        <div class="pagination" id="pagination">
+            <!-- Pagination will be loaded here -->
+        </div>
+    </main>
+</body>
+<script src="search.js"></script>
+</html>

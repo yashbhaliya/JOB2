@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="filter-category.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Filter Jobs - Job-Portal</title>
+</head>
+<body>
+    <header class="main-header">
+        <div class="nav-container">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <!-- Logo -->
+            <a href="home.html" class="logo">
+                <img src="/img/job-portal-logo.jpg" alt="job-portal">
+                Job-Portal
+            </a>
+
+            <!-- Navigation Menu -->
+            <ul id="navMenu">
+                <div class="close-menu">
+                    <span><i class="fas fa-times"></i> CLOSE</span>
+                </div>
+                <li><a href="home.html" class="nav-a">Home</a></li>
+
+                <li class="category">
+                    <a href="#" class="nav-a">
+                        Category <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                    <div class="category-dropdown">
+                        <a href="filter-category.html?category=it-software">IT & Software</a>
+                        <a href="filter-category.html?category=marketing">Marketing</a>
+                        <a href="filter-category.html?category=finance">Finance</a>
+                        <a href="filter-category.html?category=design">Design</a>
+                    </div>
+                </li>
+
+                <li class="Employment-Type">
+                    <a href="#" class="nav-a">
+                        Employment-Type <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                    <div class="Employment-Type-dropdown">
+                        <a href="filter-type.html?type=fulltime">Full-time</a>
+                        <a href="filter-type.html?type=parttime">Part-time</a>
+                        <a href="filter-type.html?type=remote">Remote</a>
+                        <a href="filter-type.html?type=internship">Internship</a>
+                    </div>
+                </li>
+
+                <li><a href="filter.html?filter=featured" class="nav-a">Featured</a></li>
+                <li><a href="filter.html?filter=urgent" class="nav-a">Urgent</a></li>
+                
+                <li class="mobile-auth">
+                    <a href="home.html" class="nav-a">Login</a>
+                </li>
+                <li class="mobile-auth">
+                    <a href="home.html" class="nav-a">Sign Up</a>
+                </li>
+            </ul>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" id="searchInput" placeholder="Search jobs...">
+                    <button class="search-btn">Search</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <h2 class="job-h2" id="categoryTitle">Filtered Jobs</h2>
+        <p class="job-p">Find jobs based on your selected category</p>
+        
+
+        
+        <div class="content-wrapper">
+            <aside class="filters-sidebar">
+                <h3>Filters</h3>
+                
+                <div class="filter-group">
+                    <h4>Search</h4>
+                    <div class="search-filter">
+                        <input type="text" id="filterSearch" placeholder="Search jobs...">
+                        <button class="filter-search-btn">Search</button>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h4>Employment Type</h4>
+                    <div class="filter-options">
+                        <label><input type="checkbox" value="Full-time"> Full-time</label>
+                        <label><input type="checkbox" value="Part-time"> Part-time</label>
+                        <label><input type="checkbox" value="Remote"> Remote</label>
+                        <label><input type="checkbox" value="Internship"> Internship</label>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h4>Salary Range</h4>
+                    <div class="filter-options">
+                        <label><input type="checkbox" value="0-30000"> ₹0 - ₹30,000</label>
+                        <label><input type="checkbox" value="30000-60000"> ₹30,000 - ₹60,000</label>
+                        <label><input type="checkbox" value="60000-100000"> ₹60,000 - ₹100,000</label>
+                        <label><input type="checkbox" value="100000+"> ₹100,000+</label>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h4>Experience Level</h4>
+                    <div class="filter-options">
+                        <label><input type="checkbox" value="freshman"> Intern</label>
+                        <label><input type="checkbox" value="junior"> Junior (1-3 years)</label>
+                        <label><input type="checkbox" value="mid"> Mid-level (3-5 years)</label>
+                        <label><input type="checkbox" value="senior"> Senior (5+ years)</label>
+                    </div>
+                </div>
+                
+                <button class="clear-filters">Clear All Filters</button>
+            </aside>
+            
+            <div class="jobs-content">
+                <div id="jobsContainer" class="jobs-grid">
+                    <!-- Filtered jobs will be loaded here -->
+                </div>
+                <div class="pagination" id="pagination">
+                    <!-- Pagination will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script src="filter-category.js"></script>
+</html>

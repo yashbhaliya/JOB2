@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin.css">
+    <title>job-portal</title>
+</head>
+
+<body>
+    <header class="header">
+        <section class="hero">
+            <h1>Job-Portal Admin-Dashboard</h1>
+        </section>
+    </header>
+
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">🌙</span>
+        <span id="theme-text">Dark</span>
+    </div>
+
+    <section class="add-btn">
+        <button id="addJobBtn">Add New Job</button>
+    </section>
+
+    <section class="main">
+
+        <!-- JOB LIST -->
+        <div class="jobs">
+            
+
+             
+        </div>
+    </section>
+
+    <div class="job-modal" id="jobModal">
+        <div class="job-modal-content">
+            <span class="close-icon" onclick="closeJobModal()">&times;</span>
+            <h2>Post New Job</h2>
+
+            <form class="job-form">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <input type="text" name="companyName" placeholder="Enter company name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Job Title</label>
+                        <input type="text" name="title" placeholder="Enter job title" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Job Location</label>
+                        <input type="text" name="location" placeholder="Enter job location(only city name)..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Job Category</label>
+                        <select name="category" required>
+                            <option value="">Select---</option>
+                            <option>IT & Software</option>
+                            <option>Marketing</option>
+                            <option>Finance</option>
+                            <option>Design</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Company Logo</label>
+                    <div class="file-upload-container">
+                        <input type="file" id="companyLogoFile" name="companyLogoFile" accept="image/*" class="file-input">
+                        <label for="companyLogoFile" class="file-upload-btn">
+                            <span class="upload-icon">📁</span>
+                            <span class="upload-text">Choose Logo</span>
+                        </label>
+                        <div class="file-preview" id="logoPreview"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Min Salary</label>
+                        <input type="number" name="minSalary" placeholder="₹ Min">
+                    </div>
+                    <div class="form-group">
+                        <label>Max Salary</label>
+                        <input type="number" name="maxSalary" placeholder="₹ Max">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Experience Level</label>
+                    <div class="experience-options">
+                        <label>Intern <input type="radio" name="experience" value="intern" required></label>
+                        <label>Experienced <input type="radio" name="experience" value="experienced"></label>
+                    </div>
+                    <input type="number" id="experienceYears" name="years" placeholder="Enter years of experience">
+                </div>
+
+                <div class="form-group">
+                    <label>Employment Type</label>
+                    <div class="checkbox-group">
+                        <label>Fulltime <input type="checkbox" name="employmentType" value="Fulltime"></label>
+                        <label>Parttime <input type="checkbox" name="employmentType" value="Parttime"></label>
+                        <label>Remote <input type="checkbox" name="employmentType" value="Remote"></label>
+                        <label>Internship <input type="checkbox" name="employmentType" value="Internship"></label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group skill-inline">
+                        <label>Skills Required</label>
+                        <div class="skill-row">
+                            <input type="text" id="skillInput" placeholder="Enter a skill">
+                            <button type="button" class="skill-btn" onclick="addSkill()">Add Skill</button>
+                        </div>
+                        <div id="skillsList"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Job Expiry Date</label>
+                        <input type="date" name="expiryDate" required>
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <label>Featured <input type="checkbox" name="featured"></label>
+                    <label>Urgent<input type="checkbox" name="urgent"></label>
+                </div>
+
+                <div class="form-row">
+                    <button type="submit" class="btn-primary">Post Job</button>
+                    <button type="button" class="btn-secondary" onclick="closeJobModal()">Cancel</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</body>
+
+
+<script src="admin.js"></script>
+
+</html>

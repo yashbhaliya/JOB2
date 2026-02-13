@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Job Details - Job-Portal</title>
+</head>
+<body>
+    <header class="main-header">
+        <div class="nav-container">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <!-- Logo -->
+            <a href="home.html" class="logo">
+                <img src="/img/job-portal-logo.jpg" alt="job-portal">
+                Job-Portal
+            </a>
+
+            <!-- Navigation Menu -->
+            <ul id="navMenu">
+                <div class="close-menu">
+                    <span><i class="fas fa-times"></i> CLOSE</span>
+                </div>
+                <li><a href="home.html" class="nav-a">Home</a></li>
+
+                <li class="category">
+                    <a href="#" class="nav-a">
+                        Category <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                    <div class="category-dropdown">
+                        <a href="filter-category.html?category=it-software">IT & Software</a>
+                        <a href="filter-category.html?category=marketing">Marketing</a>
+                        <a href="filter-category.html?category=finance">Finance</a>
+                        <a href="filter-category.html?category=design">Design</a>
+                    </div>
+                </li>
+
+                <li class="Employment-Type">
+                    <a href="#" class="nav-a">
+                        Employment-Type <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                    <div class="Employment-Type-dropdown">
+                        <a href="filter-type.html?type=fulltime">Full-time</a>
+                        <a href="filter-type.html?type=parttime">Part-time</a>
+                        <a href="filter-type.html?type=remote">Remote</a>
+                        <a href="filter-type.html?type=internship">Internship</a>
+                    </div>
+                </li>
+
+                <li><a href="filter.html?filter=featured" class="nav-a">Featured</a></li>
+                <li><a href="filter.html?filter=urgent" class="nav-a">Urgent</a></li>
+            </ul>
+            
+            <div class="search">
+                <input type="text" id="searchInput" placeholder="Search jobs...">
+                <button class="search-btn">Search</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="job-detail">
+        <div id="errorContainer" class="error-container" style="display: none;">
+            <div class="error-content">
+                <i class="fas fa-exclamation-triangle error-icon"></i>
+                <h2>Error Loading Job Details</h2>
+                <p id="errorMessage">Unable to load job details. Please try again later.</p>
+                <a href="home.html" class="error-btn">Back to Jobs</a>
+            </div>
+        </div>
+        
+        <div id="jobContainer" class="container">
+            <div class="job-header">
+                <div class="company-info">
+                    <img id="companyLogo" src="" alt="Company Logo" class="company-logo">
+                    <div>
+                        <h1 id="jobTitle">Job Title</h1>
+                        <p id="companyName" class="company">Company Name</p>
+                        <button class="apply-btn">Apply Now</button>
+                    </div>
+                </div>
+                <div class="job-badges">
+                    <span id="featuredBadge" class="badge featured"><img src="/img/features.png" alt="Featured" class="star-icon"> Featured</span>
+                    <span id="urgentBadge" class="badge urgent"><img src="/img/urgent.png" alt="Urgent" class="star-icon"> Urgent</span>
+                </div>
+            </div>
+
+            <div class="job-content">
+                <div class="job-info">
+                    <div class="info-item">
+                        <strong>Category:</strong>
+                        <span id="category" class="clickable-category">-</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Salary:</strong>
+                        <span id="salary">-</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Experience:</strong>
+                        <span id="experience">-</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Employment Type:</strong>
+                        <span id="employmentType">-</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Location:</strong>
+                        <span id="location">-</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Expires:</strong>
+                        <span id="expiryDate">-</span>
+                    </div>
+                </div>
+
+                <div class="job-skills">
+                    <h3>Required Skills</h3>
+                    <div id="skillsList" class="skills-list">
+                        <!-- Skills will be added here -->
+                    </div>
+                </div>
+
+                <div class="job-career">
+                    <h3>Career Opportunities</h3>
+                    <div class="career-content">
+                        <p>Join our team and advance your career in a dynamic environment with growth opportunities, professional development, and competitive benefits.</p>
+                        <ul class="career-benefits">
+                            <li>Professional development programs</li>
+                            <li>Career advancement opportunities</li>
+                            <li>Competitive salary and benefits</li>
+                            <li>Work-life balance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script src="detail.js"></script>
+</html>
