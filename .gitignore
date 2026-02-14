@@ -9,6 +9,7 @@ node_modules/
 ############################
 .env
 .env.*
+
 !.env.example
 
 ############################
@@ -57,7 +58,3 @@ temp/
 *.sqlite
 *.db
 
-############################
-# Optional: If you DON'T want backend
-############################
-# backend/
