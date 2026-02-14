@@ -1,16 +1,26 @@
 // Check authentication
-const user = JSON.parse(localStorage.getItem('user'));
-if (!user) {
+let user = JSON.parse(localStorage.getItem('user'));
+let token = localStorage.getItem('token');
+
+// Clean up: remove token from user object if it exists (old data)
+if (user && user.token) {
+    delete user.token;
+    localStorage.setItem('user', JSON.stringify(user));
+}
+
+// If no separate token, try to get from user object (backward compatibility)
+if (!token && user && user.token) {
+    token = user.token;
+    localStorage.setItem('token', token);
+}
+
+if (!user || !token) {
+    alert('Session expired. Please login again.');
     window.location.href = 'home.html';
 }
 
-// Get token from either user object or separate storage
-if (!user.token) {
-    user.token = localStorage.getItem('token');
-}
-
 console.log('User object:', user);
-console.log('Has token:', !!user.token);
+console.log('Has token:', !!token);
 
 // Initialize arrays if they don't exist
 if (!user.skills) user.skills = [];
@@ -35,7 +45,7 @@ async function saveProfileToMongoDB() {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${user.token}`
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
                 name: user.name,
@@ -51,6 +61,12 @@ async function saveProfileToMongoDB() {
         if (!response.ok) {
             const errorData = await response.json();
             console.error('Save failed:', errorData);
+            if (response.status === 401) {
+                alert('Session expired. Please login again.');
+                localStorage.clear();
+                window.location.href = 'home.html';
+                return null;
+            }
             throw new Error('Failed to save profile');
         }
         const result = await response.json();
@@ -69,18 +85,24 @@ async function loadProfileFromMongoDB() {
         console.log('Loading from MongoDB...');
         const response = await fetch('http://localhost:5000/api/profile', {
             headers: {
-                'Authorization': `Bearer ${user.token}`
+                'Authorization': `Bearer ${token}`
             }
         });
         
-        if (!response.ok) throw new Error('Failed to load profile');
+        if (!response.ok) {
+            if (response.status === 401) {
+                alert('Session expired. Please login again.');
+                localStorage.clear();
+                window.location.href = 'home.html';
+                return null;
+            }
+            throw new Error('Failed to load profile');
+        }
         const data = await response.json();
         console.log('Loaded from MongoDB:', data);
         
         if (data.user) {
-            const token = user.token;
             Object.assign(user, data.user);
-            user.token = token;
             
             // Ensure arrays exist
             if (!user.skills) user.skills = [];
@@ -101,7 +123,7 @@ async function loadProfileFromMongoDB() {
 let profileSkills = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
-    if (user.token) {
+    if (token) {
         await loadProfileFromMongoDB();
     }
     displayUserData();
@@ -116,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             reader.onload = async (event) => {
                 user.profileImage = event.target.result;
                 localStorage.setItem('user', JSON.stringify(user));
-                if (user.token) {
+                if (token) {
                     await saveProfileToMongoDB();
                 }
                 displayUserData();
@@ -286,7 +308,7 @@ document.getElementById('editForm').addEventListener('submit', async (e) => {
     
     localStorage.setItem('user', JSON.stringify(user));
     
-    if (user.token) {
+    if (token) {
         console.log('Calling saveProfileToMongoDB...');
         const result = await saveProfileToMongoDB();
         if (result) {
@@ -397,7 +419,7 @@ document.getElementById('experienceForm').addEventListener('submit', async (e) =
     
     localStorage.setItem('user', JSON.stringify(user));
     
-    if (user.token) {
+    if (token) {
         console.log('Saving experience to MongoDB...', expData);
         const result = await saveProfileToMongoDB();
         if (result) {
@@ -418,7 +440,7 @@ async function deleteExperience(index) {
     if (confirm('Are you sure you want to delete this experience?')) {
         user.experiences.splice(index, 1);
         localStorage.setItem('user', JSON.stringify(user));
-        if (user.token) {
+        if (token) {
             await saveProfileToMongoDB();
         }
         displayExperience();
@@ -537,7 +559,7 @@ document.getElementById('educationForm').addEventListener('submit', async (e) =>
     
     localStorage.setItem('user', JSON.stringify(user));
     
-    if (user.token) {
+    if (token) {
         console.log('Saving education to MongoDB...', eduData);
         const result = await saveProfileToMongoDB();
         if (result) {
@@ -558,7 +580,7 @@ async function deleteEducation(index) {
     if (confirm('Are you sure you want to delete this education?')) {
         user.educations.splice(index, 1);
         localStorage.setItem('user', JSON.stringify(user));
-        if (user.token) {
+        if (token) {
             await saveProfileToMongoDB();
         }
         displayEducation();
