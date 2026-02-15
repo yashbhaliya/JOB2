@@ -164,7 +164,7 @@ body {
     background: var(--bg-card);
     border-radius: 20px;
     padding: 20px;
-    max-height: 210px;
+    min-height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -479,7 +479,8 @@ body {
 }
 
 .job-form input,
-.job-form select {
+.job-form select,
+.job-form textarea {
     width: 100%;
     padding: 13px 14px;
     font-size: 14px;
@@ -488,14 +489,22 @@ body {
     background: #ffffff;
     outline: none;
     transition: all 0.25s ease;
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
 }
 
-.job-form input::placeholder {
+.job-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.job-form input::placeholder,
+.job-form textarea::placeholder {
     color: #9ca3af;
 }
 
 .job-form input:focus,
-.job-form select:focus {
+.job-form select:focus,
+.job-form textarea:focus {
     border-color: #6366f1;
     box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.18);
 }

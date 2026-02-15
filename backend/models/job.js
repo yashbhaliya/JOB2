@@ -6,6 +6,7 @@ const jobSchema = new mongoose.Schema({
     companyName: { type: String, required: true },
     location: { type: String, required: true },
     companyLogo: String,
+    description: String,
     minSalary: String,
     maxSalary: String,
     experience: { type: String, default: 'freshman' },
@@ -15,6 +16,9 @@ const jobSchema = new mongoose.Schema({
     expiryDate: String,
     featured: { type: Boolean, default: false },
     urgent: { type: Boolean, default: false }
+}, { 
+    toJSON: { virtuals: false },
+    toObject: { virtuals: false }
 });
 
 const Job = mongoose.model('Job', jobSchema);

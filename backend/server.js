@@ -21,9 +21,9 @@ const PORT = process.env.PORT || 5000;
    MIDDLEWARES
 ====================== */
 app.use(cors());
-app.use(bodyParser.json());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 /* ======================
    STATIC FILES
@@ -67,7 +67,10 @@ app.get('/api/jobs/:id', async (req, res) => {
 // CREATE job
 app.post('/api/jobs', async (req, res) => {
   try {
-    const { title, category, companyName, location } = req.body;
+    const { title, category, companyName, location, description } = req.body;
+
+    console.log('🔵 POST - Full req.body:', JSON.stringify(req.body, null, 2));
+    console.log('🔵 POST - Description field:', description);
 
     if (!title || !category || !companyName || !location) {
       return res.status(400).json({
@@ -76,10 +79,14 @@ app.post('/api/jobs', async (req, res) => {
     }
 
     const job = new Job(req.body);
-    await job.save();
+    console.log('🔵 POST - Job before save:', job);
+    const savedJob = await job.save();
+    console.log('🔵 POST - Job after save:', savedJob.toObject());
+    console.log('🔵 POST - Job description after save:', savedJob.description);
 
-    res.json({ message: 'Job saved successfully!', job });
+    res.json({ message: 'Job saved successfully!', job: savedJob.toObject() });
   } catch (err) {
+    console.error('❌ POST Error:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -87,7 +94,10 @@ app.post('/api/jobs', async (req, res) => {
 // UPDATE job
 app.put('/api/jobs/:id', async (req, res) => {
   try {
-    const { title, category, companyName, location } = req.body;
+    const { title, category, companyName, location, description } = req.body;
+
+    console.log('UPDATE - Received data:', req.body);
+    console.log('UPDATE - Description:', req.body.description);
 
     if (!title || !category || !companyName || !location) {
       return res.status(400).json({
@@ -95,39 +105,22 @@ app.put('/api/jobs/:id', async (req, res) => {
       });
     }
 
-    const allowedFields = [
-      'title',
-      'category',
-      'companyName',
-      'location',
-      'companyLogo',
-      'minSalary',
-      'maxSalary',
-      'experience',
-      'years',
-      'employmentTypes',
-      'skills',
-      'expiryDate',
-      'featured',
-      'urgent'
-    ];
+    const updateData = req.body;
 
-    const updateData = {};
-    allowedFields.forEach(field => {
-      if (req.body[field] !== undefined) {
-        updateData[field] = req.body[field];
-      }
-    });
+    console.log('UPDATE - Update data:', updateData);
 
     const updatedJob = await Job.findByIdAndUpdate(
       req.params.id,
       updateData,
-      { new: true }
+      { new: true, runValidators: false }
     );
 
     if (!updatedJob) {
       return res.status(404).json({ message: 'Job not found' });
     }
+
+    console.log('UPDATE - Updated job:', updatedJob);
+    console.log('UPDATE - Updated job description:', updatedJob.description);
 
     res.json(updatedJob);
   } catch (err) {

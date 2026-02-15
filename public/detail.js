@@ -189,6 +189,14 @@ function displayJobDetails(job) {
     document.getElementById('location').textContent = job.location || 'Not specified';
     document.getElementById('expiryDate').textContent = job.expiryDate || 'Not specified';
     
+    // Update job description
+    const descriptionElement = document.getElementById('jobDescription');
+    if (job.description && job.description.trim()) {
+        descriptionElement.innerHTML = `<p style="white-space: pre-wrap;">${job.description}</p>`;
+    } else {
+        descriptionElement.innerHTML = '<p>No description provided.</p>';
+    }
+    
     // Update skills
     const skillsList = document.getElementById('skillsList');
     if (job.skills && job.skills.length > 0) {

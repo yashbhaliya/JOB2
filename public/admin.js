@@ -14,15 +14,23 @@ async function fetchJobs() {
     try {
         const res = await fetch('http://localhost:5000/api/jobs');
         jobs = await res.json();
+        localStorage.setItem('jobPortalJobs', JSON.stringify(jobs));
         renderJobs();
     } catch (err) {
         console.error('Error fetching jobs:', err);
+        const cached = localStorage.getItem('jobPortalJobs');
+        if (cached) {
+            jobs = JSON.parse(cached);
+            renderJobs();
+        }
     }
 }
 
 // 2. Render using MongoDB _id
 function renderJobs() {
     const jobsContainer = document.querySelector('.jobs');
+        // console.log('TTTTTT', jobs);
+
     jobsContainer.innerHTML = '';
     jobs.forEach(job => {
         const jobCard = document.createElement('div');
@@ -36,9 +44,10 @@ function renderJobs() {
                 </div>
             </div>
             <p><strong>Category:</strong> ${job.category}</p>
+            ${job.description ? `<p><strong>Description:</strong> ${job.description.substring(0, 100)}${job.description.length > 100 ? '...' : ''}</p>` : ''}
             <p><strong>Salary:</strong> ${job.minSalary === 'No salary needed' ? 'No salary needed' : `₹${job.minSalary} - ₹${job.maxSalary}`}</p>
             <p><strong>Experience:</strong> ${job.experience}${job.years ? ` (${job.years} years)` : ''}</p>
-            <p><strong>Type:</strong> ${job.employmentTypes ? job.employmentTypes.join(', ') : ''}</p>
+            <p><strong>Type:</strong> ${Array.isArray(job.employmentTypes) && job.employmentTypes.length > 0 ? job.employmentTypes.join(', ') : 'N/A'}</p>
             ${job.featured ? '<span class="featured">⭐  </span>' : ''}
             ${job.urgent ? '<span class="urgent"> ⚡</span>' : ''}
             <div class="actions">
@@ -69,6 +78,7 @@ jobForm.addEventListener('submit', async function (e) {
         category: formData.get('category'),
         companyName: formData.get('companyName'),
         location: formData.get('location'),
+        description: formData.get('description') || '',
         minSalary: formData.get('minSalary') || 'No salary needed',
         maxSalary: formData.get('maxSalary') || 'No salary needed',
         experience: formData.get('experience'),
@@ -80,13 +90,19 @@ jobForm.addEventListener('submit', async function (e) {
         urgent: formData.has('urgent')
     };
 
-    // Only include companyLogo if it's being updated (new upload)
+    console.log('📤 Submitting job data:', jobData);
+    console.log('📝 Description value:', jobData.description);
+
+    // Include companyLogo if it's being updated (new upload) or keep existing
     const newLogo = document.getElementById('companyLogoFile').getAttribute('data-base64');
     if (newLogo) {
         jobData.companyLogo = newLogo;
+    } else if (editingJobId) {
+        const currentJob = jobs.find(j => j._id === editingJobId);
+        if (currentJob && currentJob.companyLogo) {
+            jobData.companyLogo = currentJob.companyLogo;
+        }
     }
-
-    console.log('Submitting job data:', jobData);
 
     try {
         let url = 'http://localhost:5000/api/jobs';
@@ -97,17 +113,15 @@ jobForm.addEventListener('submit', async function (e) {
             method = 'PUT';
         }
 
-        console.log(`Making ${method} request to ${url}`);
-
         const res = await fetch(url, {
             method: method,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(jobData)
         });
 
-        console.log('Response status:', res.status);
         const responseText = await res.text();
-        console.log('Response text:', responseText);
+        console.log('✅ Response status:', res.status);
+        console.log('📥 Response data:', responseText);
 
         if (res.ok) {
             alert(editingJobId ? 'Job updated successfully!' : 'Job posted successfully!');
@@ -131,20 +145,11 @@ document.querySelector('.jobs').addEventListener('click', async function (e) {
     const job = jobs.find(j => j._id === jobId);
 
     if (target.classList.contains('btn-view')) {
-        console.log('View button clicked for job ID:', jobId);
-        console.log('Job data:', job);
-        
         isViewMode = true;
         editingJobId = jobId;
-        
-        try {
-            populateForm(job);
-            openJobModal();
-            console.log('View modal opened successfully');
-        } catch (error) {
-            console.error('Error opening view modal:', error);
-            alert('Error opening view modal: ' + error.message);
-        }
+        console.log('VIEW - Job object:', job);
+        populateForm(job);
+        openJobModal();
     } else if (target.classList.contains('btn-edit')) {
         isViewMode = false;
         editingJobId = jobId;
@@ -171,8 +176,15 @@ function openJobModal() {
         // Hide form and show card layout
         jobForm.style.display = 'none';
         
+        // Remove any existing view card first
+        const existingViewCard = document.querySelector('.job-view-card');
+        if (existingViewCard) existingViewCard.remove();
+        
         // Create view card layout
         const job = jobs.find(j => j._id === editingJobId);
+        console.log('VIEW POPUP - Job data:', job);
+        console.log('VIEW POPUP - Description:', job.description);
+        
         const viewCard = document.createElement('div');
         viewCard.className = 'job-view-card';
         
@@ -189,12 +201,13 @@ function openJobModal() {
                     <p class="company-name">${job.companyName || 'N/A'}</p>
                 </div>
             </div>
-            <div class="view-field"><strong>Category:</strong> ${job.category}</div>
+            <div class="view-field"><strong>Category:</strong> ${job.category || 'N/A'}</div>
             <div class="view-field"><strong>Location:</strong> ${job.location || 'N/A'}</div>
+            <div class="view-field"><strong>Description:</strong> ${job.description || 'N/A'}</div>
             <div class="view-field"><strong>Salary:</strong> ${job.minSalary === 'No salary needed' ? 'No salary needed' : `₹${job.minSalary} - ₹${job.maxSalary}`}</div>
-            <div class="view-field"><strong>Experience:</strong> ${job.experience}${job.years ? ` (${job.years} years)` : ''}</div>
-            <div class="view-field"><strong>Employment Type:</strong> ${job.employmentTypes ? job.employmentTypes.join(', ') : 'N/A'}</div>
-            <div class="view-field"><strong>Skills:</strong> ${job.skills ? job.skills.join(', ') : 'N/A'}</div>
+            <div class="view-field"><strong>Experience:</strong> ${job.experience || 'N/A'}${job.years ? ` (${job.years} years)` : ''}</div>
+            <div class="view-field"><strong>Employment Type:</strong> ${Array.isArray(job.employmentTypes) && job.employmentTypes.length > 0 ? job.employmentTypes.join(', ') : 'N/A'}</div>
+            <div class="view-field"><strong>Skills:</strong> ${Array.isArray(job.skills) && job.skills.length > 0 ? job.skills.join(', ') : 'N/A'}</div>
             <div class="view-field"><strong>Expiry Date:</strong> ${job.expiryDate || 'N/A'}</div>
             <div class="job-view-badges">
                 ${job.featured ? '<span class="featured">⭐</span>' : ''}
@@ -222,7 +235,7 @@ function openJobModal() {
         if (fileUploadBtn) fileUploadBtn.style.display = 'flex';
         
         // Enable all inputs
-        jobForm.querySelectorAll('input, select').forEach(el => {
+        jobForm.querySelectorAll('input, select, textarea').forEach(el => {
             el.readOnly = false;
             el.disabled = false;
         });
@@ -255,7 +268,7 @@ function closeJobModal() {
     }
     
     // Re-enable all elements
-    jobForm.querySelectorAll('input, select').forEach(el => {
+    jobForm.querySelectorAll('input, select, textarea').forEach(el => {
         el.readOnly = false;
         el.disabled = false;
     });
@@ -267,13 +280,13 @@ function closeJobModal() {
 }
 
 function populateForm(job) {
-    jobForm.querySelector('input[name="title"]').value = job.title;
-    jobForm.querySelector('select[name="category"]').value = job.category;
+    jobForm.querySelector('input[name="title"]').value = job.title || '';
+    jobForm.querySelector('select[name="category"]').value = job.category || '';
     jobForm.querySelector('input[name="companyName"]').value = job.companyName || '';
     jobForm.querySelector('input[name="location"]').value = job.location || '';
     
     // Handle company logo
-    if (job.companyLogo) {
+    if (job.companyLogo && job.companyLogo !== 'null' && job.companyLogo !== null) {
         const preview = document.getElementById('logoPreview');
         preview.innerHTML = `
             <img src="${job.companyLogo}" alt="Company Logo" class="preview-image">
@@ -284,8 +297,9 @@ function populateForm(job) {
         preview.classList.add('active');
     }
     
-    jobForm.querySelector('input[name="minSalary"]').value = job.minSalary === 'No salary needed' ? '' : job.minSalary;
-    jobForm.querySelector('input[name="maxSalary"]').value = job.maxSalary === 'No salary needed' ? '' : job.maxSalary;
+    jobForm.querySelector('textarea[name="description"]').value = job.description || '';
+    jobForm.querySelector('input[name="minSalary"]').value = job.minSalary === 'No salary needed' ? '' : (job.minSalary || '');
+    jobForm.querySelector('input[name="maxSalary"]').value = job.maxSalary === 'No salary needed' ? '' : (job.maxSalary || '');
     
     const expRadio = jobForm.querySelector(`input[name="experience"][value="${job.experience}"]`);
     if(expRadio) expRadio.checked = true;
@@ -294,14 +308,14 @@ function populateForm(job) {
     experienceYearsInput.style.display = job.experience === 'experienced' ? 'block' : 'none';
 
     jobForm.querySelectorAll('input[name="employmentType"]').forEach(cb => {
-        cb.checked = job.employmentTypes.includes(cb.value);
+        cb.checked = Array.isArray(job.employmentTypes) && job.employmentTypes.includes(cb.value);
     });
 
-    currentSkills = [...job.skills];
+    currentSkills = Array.isArray(job.skills) ? [...job.skills] : [];
     renderSkillsList(isViewMode);
-    jobForm.querySelector('input[name="expiryDate"]').value = job.expiryDate;
-    jobForm.querySelector('input[name="featured"]').checked = job.featured;
-    jobForm.querySelector('input[name="urgent"]').checked = job.urgent;
+    jobForm.querySelector('input[name="expiryDate"]').value = job.expiryDate || '';
+    jobForm.querySelector('input[name="featured"]').checked = job.featured || false;
+    jobForm.querySelector('input[name="urgent"]').checked = job.urgent || false;
 }
 
 function renderSkillsList(readonly = false) {
