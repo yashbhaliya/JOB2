@@ -91,7 +91,7 @@
             </div>
 
             <h2>Send Us a Message</h2>
-            <form class="contact-form">
+            <form class="contact-form" id="contactForm">
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input type="text" id="name" name="name" required>
@@ -159,4 +159,21 @@
     </footer>
 </body>
 <script src="static-pages.js"></script>
+<script>
+// Handle contact form submission
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value;
+    
+    // Create Gmail compose URL with pre-filled data
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=info@jobportal.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message)}`;
+    
+    // Open Gmail in new tab
+    window.open(gmailUrl, '_blank');
+});
+</script>
 </html>
