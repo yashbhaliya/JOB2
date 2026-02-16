@@ -43,7 +43,7 @@ app.use('/api', profileRoutes);
 // GET all jobs
 app.get('/api/jobs', async (req, res) => {
   try {
-    const jobs = await Job.find();
+    const jobs = await Job.find().sort({ createdAt: -1 });
     res.json(jobs);
   } catch (err) {
     console.error(err);

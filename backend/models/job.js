@@ -17,6 +17,7 @@ const jobSchema = new mongoose.Schema({
     featured: { type: Boolean, default: false },
     urgent: { type: Boolean, default: false }
 }, { 
+    timestamps: true,
     toJSON: { virtuals: false },
     toObject: { virtuals: false }
 });
