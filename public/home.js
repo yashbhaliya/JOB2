@@ -404,8 +404,10 @@ function updateAuthUI() {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const authButtons = document.querySelector('.auth-buttons');
+    const mobileAuthContainer = document.querySelector('.mobile-auth-container');
 
     if (token && user.name) {
+        // Desktop view
         authButtons.innerHTML = `
             <div class="user-profile" onclick="toggleProfileDropdown()">
                 <i class="fas fa-user-circle" style="font-size: 24px; color: white; cursor: pointer;"></i>
@@ -424,6 +426,17 @@ function updateAuthUI() {
                 </div>
             </div>
         `;
+        
+        // Mobile view
+        if (mobileAuthContainer) {
+            mobileAuthContainer.innerHTML = `
+                <div class="mobile-user-profile">
+                    <i class="fas fa-user-circle" style="font-size: 20px; color: white;"></i>
+                    <span style="color: white; font-weight: 600; font-size: 15px;">${user.name}</span>
+                </div>
+                <button class="mobile-logout-btn" onclick="logout()">Logout</button>
+            `;
+        }
     }
 }
 

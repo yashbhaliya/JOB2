@@ -131,10 +131,16 @@
     color: black;
 }
 
+.category-dropdown a::after,
+.Employment-Type-dropdown a::after {
+    display: none;
+}
+
 .category-dropdown a:hover,
 .Employment-Type-dropdown a:hover {
     background: #f1f5f9;
     color: var(--primary-dark);
+    padding-left: 15px;
 }
 
 /* Desktop hover dropdown */

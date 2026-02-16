@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Contact Us - Job-Portal</title>
-</head>
+    <link rel="stylesheet" href="mobile-fixes.css">`n</head>
 <body>
     <header class="main-header">
         <div class="nav-container">
@@ -73,21 +73,27 @@
             <p>Have questions or need assistance? We're here to help! Reach out to us through any of the following methods, and our team will get back to you as soon as possible.</p>
             
             <div class="contact-info-cards">
-                <div class="info-card">
-                    <i class="fas fa-envelope"></i>
-                    <h3>Email</h3>
-                    <p>info@jobportal.com</p>
-                </div>
-                <div class="info-card">
-                    <i class="fas fa-phone"></i>
-                    <h3>Phone</h3>
-                    <p>+1 234 567 8900</p>
-                </div>
-                <div class="info-card">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h3>Address</h3>
-                    <p>123 Business St, City</p>
-                </div>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info@jobportal.com" target="_blank" style="text-decoration: none; color: inherit;">
+                    <div class="info-card" style="cursor: pointer;">
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email</h3>
+                        <p>info@jobportal.com</p>
+                    </div>
+                </a>
+                <a href="tel:+12345678900" style="text-decoration: none; color: inherit;">
+                    <div class="info-card" style="cursor: pointer;">
+                        <i class="fas fa-phone"></i>
+                        <h3>Phone</h3>
+                        <p>+1 234 567 8900</p>
+                    </div>
+                </a>
+                <a href="https://www.google.com/maps/search/?api=1&query=123+Business+St,+City" target="_blank" style="text-decoration: none; color: inherit;">
+                    <div class="info-card" style="cursor: pointer;">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Address</h3>
+                        <p>123 Business St, City</p>
+                    </div>
+                </a>
             </div>
 
             <h2>Send Us a Message</h2>
@@ -157,7 +163,7 @@
             </div>
         </div>
     </footer>
-</body>
+<script src="mobile-universal.js"></script>`n</body>
 <script src="static-pages.js"></script>
 <script>
 // Handle contact form submission

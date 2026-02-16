@@ -137,24 +137,35 @@
     margin-left: 10px;
     text-decoration: none;
     color: black;
+    
+}
+
+.category-dropdown a::after,
+.Employment-Type-dropdown a::after {
+    display: none;
+    
 }
 
 .category-dropdown a:hover,
 .Employment-Type-dropdown a:hover {
     background: #f1f5f9;
     color: var(--primary-dark);
+    padding-left: 15px;
 }
 
 /* Desktop hover dropdown */
 .category:hover .category-dropdown,
 .Employment-Type:hover .Employment-Type-dropdown {
     display: block !important;
+    
 }
 
 /* Keep dropdown open when hovering over dropdown itself */
 .category-dropdown:hover,
 .Employment-Type-dropdown:hover {
     display: block !important;
+    /* padding-left: 10px; */
+
 }
 
 /* Add gap to prevent dropdown from closing when moving cursor */
@@ -296,13 +307,15 @@
     color: white;
     line-height: 1.2;
     margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 .hero-left p {
     font-size: 18px;
-    color: #e5e7eb;
+    color: #FFFFFF;
     line-height: 1.6;
     max-width: 500px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 
 .hero-buttons {
@@ -1234,20 +1247,33 @@
 
 
 
-/* ================= MOBILE NAVBAR ================= */
+/* ================= MOBILE RESPONSIVE (900px and below) ================= */
 @media (max-width: 900px) {
-
+    /* Navigation */
     .nav-container {
-        justify-content: space-between;
-        position: relative;
+        padding: 12px 18px;
     }
 
     .menu-toggle {
         display: block;
+        order: 1;
     }
 
     .logo {
-        order: 0;
+        order: 2;
+        font-size: 18px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .logo img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .nav-right {
+        display: none;
     }
 
     .nav-container ul {
@@ -1259,12 +1285,11 @@
         background: #0A223F;
         flex-direction: column;
         align-items: flex-start;
-        padding: 22px;
-        gap: 18px;
-        transition: left 0.35s ease;
+        padding: 20px;
+        gap: 15px;
+        transition: left 0.3s ease;
         z-index: 2000;
-        display: flex !important;
-        justify-content: space-between;
+        overflow-y: auto;
     }
 
     .nav-container ul.active {
@@ -1280,7 +1305,14 @@
         padding: 12px 10px;
         font-size: 16px;
         color: white;
-        
+    }
+
+    .close-menu {
+        display: block;
+        color: white;
+        width: 100%;
+        margin-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
     }
 
     .category-dropdown,
@@ -1291,8 +1323,14 @@
         box-shadow: none;
         border-radius: 10px;
         margin-top: 8px;
+        margin-left: 0;
+        transform: none;
         display: none;
-        animation: none;
+    }
+
+    .category:hover .category-dropdown,
+    .Employment-Type:hover .Employment-Type-dropdown {
+        display: none !important;
     }
 
     .category.active .category-dropdown,
@@ -1304,63 +1342,204 @@
     .Employment-Type-dropdown a {
         color: #e5e7eb;
         margin-left: 0;
-        padding: 8px 16px;
+        padding: 10px 16px;
     }
 
-    .close-menu {
-        display: block;
-        color: white;
+    .mobile-auth-container {
+        display: none;
         width: 100%;
-        margin-bottom: 12px;
+        margin-top: auto;
+        padding-top: 15px;
+        gap: 10px;
+        flex-direction: row;
     }
-    
-    .search {
+
+    .mobile-auth {
         display: none;
     }
+
+    @media (max-width: 900px) {
+        .mobile-auth-container {
+            display: flex;
+        }
+    }
+
+    .mobile-login-btn,
+    .mobile-signup-btn {
+        flex: 1;
+        padding: 12px 20px;
+        border-radius: 8px;
+        border: none;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-login-btn {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+
+    .mobile-login-btn:hover {
+        background: white;
+        color: #0A223F;
+    }
+
+    .mobile-signup-btn {
+        background: white;
+        color: #0A223F;
+    }
+
+    .mobile-signup-btn:hover {
+        background: #f3f4f6;
+    }
+i
+    .mobile-user-profile {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 15px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 8px;
+    }
+
+    .mobile-logout-btn {
+        padding: 12px 20px;
+        border-radius: 8px;
+        background: #ef4444;
+        color: white;
+        border: none;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-logout-btn:hover {
+        background: #dc2626;
+    }
+
+    /* Hero Section */
     .hero {
-        position: relative;
-        display: block;
-        margin: 0px auto;
-        padding: 40px 22px;
-        min-height: 20vh;
-        overflow: hidden;
-    }
-
-    .hero .img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-    }
-
-    .hero .img img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        filter: blur(3px);
-    }
-
-    .hero .img::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, rgba(10, 34, 63, 0.7), rgba(0, 0, 0, 0.5));
-        z-index: 2;
+        padding: 40px 15px;
+        min-height: auto;
+        gap: 20px;
     }
 
     .hero-left {
-        position: relative;
-        z-index: 3;
         text-align: center;
+    }
+
+    .hero-left h1 {
+        font-size: 28px;
+        margin-bottom: 15px;
+    }
+
+    .hero-left p {
+        font-size: 15px;
+        max-width: 100%;
     }
 
     .hero-right {
         display: none;
+    }
+
+    .hero-buttons {
+        position: static;
+        transform: none;
+        margin-top: 25px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .hero-btn {
+        flex: 1;
+        min-width: 120px;
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+
+    /* Main Content */
+    .main {
+        padding: 40px 15px;
+    }
+
+    .job-h2 {
+        font-size: 26px;
+    }
+
+    .job-p {
+        font-size: 15px;
+        margin-bottom: 30px;
+    }
+
+    .jobs-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+    }
+
+    .job-card {
+        padding: 20px;
+    }
+
+    .job-header {
+        grid-template-columns: 50px 1fr;
+        text-align: left;
+        justify-items: start;
+    }
+
+    .company-logo,
+    .job-icon {
+        margin: 0;
+    }
+
+    .title-section {
+        align-items: flex-start;
+    }
+
+    /* Pagination */
+    .pagination {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .pagination button {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    /* Auth Modal */
+    .auth-modal-content {
+        width: 90%;
+        padding: 30px 20px;
+        margin: 15% auto;
+    }
+
+    .auth-modal-content h2 {
+        font-size: 24px;
+    }
+}
+
+/* ================= SMALL MOBILE (480px and below) ================= */
+@media (max-width: 480px) {
+    .nav-container {
+        padding: 10px 15px;
+    }
+
+    .logo {
+        font-size: 16px;
+    }
+
+    .logo img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .hero {
+        padding: 30px 15px;
     }
 
     .hero-left h1 {
@@ -1369,53 +1548,46 @@
 
     .hero-left p {
         font-size: 14px;
-        max-width: 100%;
     }
 
-    .orbit {
-        display: none;
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
     }
 
-   
+    .hero-btn {
+        width: 100%;
+        min-width: auto;
+    }
 
-}
-
-@media (max-width: 900px) {
     .main {
-        padding: 30px 15px;
+        padding: 30px 12px;
     }
-    
-    .content-wrapper {
-        grid-template-columns: 1fr;
-        gap: 25px;
-        padding: 0 15px;
+
+    .job-h2 {
+        font-size: 22px;
     }
-    
-    .filters-sidebar {
-        order: 2;
-        padding: 25px 20px;
-        position: static;
+
+    .job-p {
+        font-size: 14px;
     }
-    
-    .jobs-content {
-        order: 1;
-    }
-    
-    .jobs-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
+
     .job-card {
-        padding: 20px 15px;
+        padding: 15px;
     }
 
-    .filter-group {
-        margin-bottom: 20px;
+    .pagination button {
+        padding: 6px 10px;
+        font-size: 12px;
     }
 
-    .filter-options {
-        gap: 10px;
+    .auth-modal-content {
+        width: 95%;
+        padding: 25px 15px;
+    }
+
+    .auth-modal-content h2 {
+        font-size: 22px;
     }
 }
 /* ===== PLACEHOLDER LAYOUT ===== */
