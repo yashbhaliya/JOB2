@@ -105,15 +105,15 @@
 .Employment-Type-dropdown {
     position: absolute;
     top: 100%;
-    left: 50%; transform: translateX(-50%);
+    /* left: 50%; transform: translateX(-50%); */
     min-width: 210px;
     background: #ffffff;
     color: black;
     border-radius: 14px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    padding: 10px 0;
+    padding-left: 20px;
     display: none;
-    animation: dropdownFade .25s ease;
+    /* animation: dropdownFade .25s ease; */
     margin-top: 5px;
 }
 
@@ -653,7 +653,7 @@
     }
 
     .nav-container ul.active {
-        left: 50%; transform: translateX(-50%);
+        left: 0;
     }
 
     .nav-container ul li {
@@ -665,7 +665,6 @@
         padding: 12px 0;
         font-size: 16px;
         color: white;
-        padding-left: 10px;
     }
 
     .category:hover .category-dropdown,
@@ -693,8 +692,19 @@
     .category-dropdown a,
     .Employment-Type-dropdown a {
         color: #e5e7eb;
-        margin-left: 50%; transform: translateX(-50%);
+        margin-left: 0;
         padding: 8px 16px;
+        padding-left: 10px;
+    }
+
+    .category.active .fa-chevron-down,
+    .Employment-Type.active .fa-chevron-down {
+        transform: rotate(180deg);
+    }
+
+    .nav-container ul li a i {
+        transition: transform 0.3s ease;
+        font-size: 12px;
     }
 
     .close-menu {

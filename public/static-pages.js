@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (closeMenu && navMenu) {
         closeMenu.addEventListener("click", () => {
             navMenu.classList.remove("active");
+            const categoryItem = document.querySelector('.category');
+            const employmentItem = document.querySelector('.Employment-Type');
+            if (categoryItem) categoryItem.classList.remove('active');
+            if (employmentItem) employmentItem.classList.remove('active');
         });
     }
 
@@ -20,8 +24,42 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function(e) {
         if (navMenu && !e.target.closest('#navMenu') && !e.target.closest('.menu-toggle')) {
             navMenu.classList.remove('active');
+            const categoryItem = document.querySelector('.category');
+            const employmentItem = document.querySelector('.Employment-Type');
+            if (categoryItem) categoryItem.classList.remove('active');
+            if (employmentItem) employmentItem.classList.remove('active');
         }
     });
+
+    // Mobile dropdown toggle
+    const categoryItem = document.querySelector('.category');
+    const employmentItem = document.querySelector('.Employment-Type');
+    
+    if (categoryItem) {
+        const categoryLink = categoryItem.querySelector('.nav-a');
+        if (categoryLink) {
+            categoryLink.addEventListener('click', function(e) {
+                if (window.innerWidth <= 900) {
+                    e.preventDefault();
+                    if (employmentItem) employmentItem.classList.remove('active');
+                    categoryItem.classList.toggle('active');
+                }
+            });
+        }
+    }
+    
+    if (employmentItem) {
+        const employmentLink = employmentItem.querySelector('.nav-a');
+        if (employmentLink) {
+            employmentLink.addEventListener('click', function(e) {
+                if (window.innerWidth <= 900) {
+                    e.preventDefault();
+                    if (categoryItem) categoryItem.classList.remove('active');
+                    employmentItem.classList.toggle('active');
+                }
+            });
+        }
+    }
 
     // Search functionality
     const searchBtn = document.querySelector('.search-btn');

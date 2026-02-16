@@ -446,3 +446,200 @@ body {
 .success-notification i {
   font-size: 24px;
 }
+
+/* ================= MOBILE RESPONSIVE ================= */
+@media (max-width: 900px) {
+  body {
+    padding: 15px;
+  }
+
+  .back-btn {
+    margin-bottom: 15px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .left-card,
+  .right-card {
+    width: 100%;
+  }
+
+  .left-card {
+    padding: 20px 15px;
+  }
+
+  .avatar {
+    width: 100px;
+    height: 100px;
+    font-size: 40px;
+  }
+
+  .avatar-wrapper {
+    width: 100px;
+  }
+
+  .avatar-edit-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .section {
+    padding: 15px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .info-grid > div {
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+  }
+
+  .experience {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: 20px auto;
+    max-height: 85vh;
+  }
+
+  .modal-content h2 {
+    padding: 20px;
+    font-size: 20px;
+  }
+
+  .close {
+    right: 15px;
+    top: 15px;
+    font-size: 28px;
+  }
+
+  #editForm,
+  #experienceForm,
+  #educationForm {
+    padding: 20px;
+  }
+
+  #editForm label,
+  #experienceForm label,
+  #educationForm label {
+    font-size: 13px;
+    margin-top: 15px;
+  }
+
+  #editForm input,
+  #experienceForm input,
+  #educationForm input,
+  #editForm select,
+  #editForm textarea,
+  #experienceForm select,
+  #experienceForm textarea,
+  #educationForm select,
+  #educationForm textarea {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .btn-save {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .btn-edit {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .btn-add-skill {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .success-notification {
+    width: 90%;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .success-notification.show {
+    top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  .back-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .left-card {
+    padding: 15px;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    font-size: 32px;
+  }
+
+  .avatar-wrapper {
+    width: 80px;
+  }
+
+  .section {
+    padding: 12px;
+  }
+
+  .section h3 {
+    font-size: 16px;
+  }
+
+  .modal-content {
+    width: 98%;
+    margin: 10px auto;
+  }
+
+  .modal-content h2 {
+    padding: 15px;
+    font-size: 18px;
+  }
+
+  #editForm,
+  #experienceForm,
+  #educationForm {
+    padding: 15px;
+  }
+
+  #editForm label,
+  #experienceForm label,
+  #educationForm label {
+    font-size: 12px;
+  }
+
+  .btn-save {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .skills-display span {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+}

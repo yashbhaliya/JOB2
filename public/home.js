@@ -430,7 +430,7 @@ function updateAuthUI() {
         // Mobile view
         if (mobileAuthContainer) {
             mobileAuthContainer.innerHTML = `
-                <div class="mobile-user-profile">
+                <div class="mobile-user-profile" onclick="window.location.href='profile.html'" style="cursor: pointer;">
                     <i class="fas fa-user-circle" style="font-size: 20px; color: white;"></i>
                     <span style="color: white; font-weight: 600; font-size: 15px;">${user.name}</span>
                 </div>

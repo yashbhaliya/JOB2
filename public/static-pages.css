@@ -170,3 +170,99 @@ body {
         font-size: 20px;
     }
 }
+
+/* ================= MOBILE NAVBAR ================= */
+@media (max-width: 900px) {
+    .nav-container {
+        justify-content: center;
+        position: relative;
+    }
+
+    .menu-toggle {
+        display: block;
+        position: absolute;
+        left: 22px;
+    }
+
+    .logo {
+        order: 0;
+    }
+
+    .nav-container ul {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        background: #0A223F;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 22px;
+        gap: 18px;
+        transition: left 0.35s ease;
+        z-index: 2000;
+    }
+
+    .nav-container ul.active {
+        left: 0;
+    }
+
+    .nav-container ul li {
+        width: 100%;
+    }
+
+    .nav-container ul li a {
+        width: 100%;
+        padding-left: 20px;
+        font-size: 16px;
+        color: white;
+    }
+
+    .category:hover .category-dropdown,
+    .Employment-Type:hover .Employment-Type-dropdown {
+        display: none !important;
+    }
+
+    .category-dropdown,
+    .Employment-Type-dropdown {
+        position: static;
+        width: 100%;
+        background: #122b52;
+        box-shadow: none;
+        border-radius: 10px;
+        margin-top: 8px;
+        display: none;
+        animation: none;
+    }
+
+    .category.active .category-dropdown,
+    .Employment-Type.active .Employment-Type-dropdown {
+        display: block !important;
+    }
+
+    .category-dropdown a,
+    .Employment-Type-dropdown a {
+        color: #e5e7eb;
+        margin-left: 0;
+        padding: 8px 16px;
+    }
+
+    .close-menu {
+        display: block;
+        color: white;
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    .search {
+        display: none;
+    }
+
+    .about-hero {
+        padding: 60px 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 32px;
+    }
+}

@@ -35,6 +35,10 @@
     gap: 15px;
 }
 
+.mobile-auth-container {
+    display: none;
+}
+
 /* ================= LOGO ================= */
 .logo {
     display: flex;
@@ -1338,30 +1342,26 @@
         display: block !important;
     }
 
+    .category.active .fa-chevron-down,
+    .Employment-Type.active .fa-chevron-down {
+        transform: rotate(180deg);
+    }
+
     .category-dropdown a,
     .Employment-Type-dropdown a {
         color: #e5e7eb;
         margin-left: 0;
         padding: 10px 16px;
+        padding-left: 10px;
     }
 
     .mobile-auth-container {
-        display: none;
+        display: flex;
         width: 100%;
         margin-top: auto;
         padding-top: 15px;
         gap: 10px;
         flex-direction: row;
-    }
-
-    .mobile-auth {
-        display: none;
-    }
-
-    @media (max-width: 900px) {
-        .mobile-auth-container {
-            display: flex;
-        }
     }
 
     .mobile-login-btn,
@@ -1404,6 +1404,12 @@ i
         padding: 12px 15px;
         background: rgba(255,255,255,0.1);
         border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-user-profile:hover {
+        background: rgba(255,255,255,0.2);
+        transform: translateX(2px);
     }
 
     .mobile-logout-btn {

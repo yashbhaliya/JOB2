@@ -49,7 +49,6 @@ function initializeMobileMenu() {
             categoryLink.addEventListener('click', function(e) {
                 if (window.innerWidth <= 900) {
                     e.preventDefault();
-                    // Close other dropdown first
                     if (employmentItem) employmentItem.classList.remove('active');
                     categoryItem.classList.toggle('active');
                 }
@@ -63,7 +62,6 @@ function initializeMobileMenu() {
             employmentLink.addEventListener('click', function(e) {
                 if (window.innerWidth <= 900) {
                     e.preventDefault();
-                    // Close other dropdown first
                     if (categoryItem) categoryItem.classList.remove('active');
                     employmentItem.classList.toggle('active');
                 }
