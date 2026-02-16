@@ -187,7 +187,21 @@ function displayJobDetails(job) {
     }
     
     document.getElementById('location').textContent = job.location || 'Not specified';
-    document.getElementById('expiryDate').textContent = job.expiryDate || 'Not specified';
+    
+    // Update deadline card
+    if (job.expiryDate) {
+        const expiryDate = new Date(job.expiryDate);
+        const dateNumber = expiryDate.getDate();
+        const dateMonth = expiryDate.toLocaleString('en-US', { month: 'short' });
+        const day = String(dateNumber).padStart(2, '0');
+        const month = expiryDate.toLocaleString('en-US', { month: 'short' });
+        const year = expiryDate.getFullYear();
+        const fullDate = `${day} ${month} ${year}`;
+        
+        document.getElementById('dateNumber').textContent = dateNumber;
+        document.getElementById('dateMonth').textContent = dateMonth;
+        document.getElementById('deadlineDate').textContent = fullDate;
+    }
     
     // Update job description
     const descriptionElement = document.getElementById('jobDescription');

@@ -405,22 +405,63 @@
     border-radius: 15px;
 }
 
-.job-expiry h3 {
-    color: #1f2937;
-    margin-bottom: 15px;
-    font-size: 20px;
-}
-
-.expiry-content p {
-    color: #374151;
-    font-size: 16px;
-    margin: 0;
-    line-height: 1.6;
-}
-
-.expiry-content strong {
+.deadline-title {
+    font-size: 24px;
     font-weight: 600;
-    color: #374151;
+    margin-bottom: 20px;
+    color: #1f2937;
+}
+
+.deadline-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    gap: 20px;
+}
+
+.date-box {
+    background: white;
+    width: 70px;
+    height: 80px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.date-number {
+    font-size: 24px;
+    background: #0073E6;
+    padding: 4px 12px;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+}
+
+.date-month {
+    font-size: 15px;
+}
+
+.deadline-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.deadline-date {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.deadline-text {
+    font-size: 14px;
+    color: #6b7280;
+    margin-top: 6px;
 }
 
 .job-description h3, .job-skills h3, .job-career h3 {
