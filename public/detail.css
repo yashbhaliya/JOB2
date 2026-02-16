@@ -399,6 +399,30 @@
     border-radius: 15px;
 }
 
+.job-expiry {
+    background: #f9fafb;
+    padding: 25px;
+    border-radius: 15px;
+}
+
+.job-expiry h3 {
+    color: #1f2937;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.expiry-content p {
+    color: #374151;
+    font-size: 16px;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.expiry-content strong {
+    font-weight: 600;
+    color: #374151;
+}
+
 .job-description h3, .job-skills h3, .job-career h3 {
     color: #1f2937;
     margin-bottom: 15px;
