@@ -409,7 +409,10 @@ function updateAuthUI() {
         authButtons.innerHTML = `
             <div class="user-profile" onclick="toggleProfileDropdown()">
                 <i class="fas fa-user-circle" style="font-size: 24px; color: white; cursor: pointer;"></i>
-                <span style="color: white; font-weight: 600; cursor: pointer; margin-left: 8px;">Welcome, ${user.name}</span>
+                <div style="display: flex; flex-direction: column; margin-left: 8px; cursor: pointer;">
+                    <span style="color: white; font-size: 12px;">Welcome</span>
+                    <span style="color: white; font-weight: 600; font-size: 14px;">${user.name}</span>
+                </div>
                 <div class="profile-dropdown" id="profileDropdown">
                     <div class="profile-info">
                         <strong>${user.name}</strong>
