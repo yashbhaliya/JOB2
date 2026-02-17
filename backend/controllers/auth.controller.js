@@ -8,12 +8,15 @@ exports.signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
+    console.log('Signup attempt:', { name, email });
+
     if (!name || !email || !password) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
+      console.log('Email already exists:', email);
       return res.status(400).json({ error: 'Email already registered' });
     }
 
@@ -28,6 +31,8 @@ exports.signup = async (req, res) => {
       verificationTokenExpiry: Date.now() + 24 * 60 * 60 * 1000
     });
 
+    console.log('User created:', user._id);
+
     const verifyLink = `${process.env.APP_URL || 'https://job-portal-8aak.onrender.com'}/api/auth/verify-email?token=${token}`;
 
     await transporter.sendMail({
@@ -37,9 +42,14 @@ exports.signup = async (req, res) => {
       html: `<a href="${verifyLink}">Verify Email</a>`
     });
 
+    console.log('Verification email sent to:', email);
+
     res.json({ message: 'Verification email sent' });
   } catch (err) {
     console.error('Signup error:', err);
+    if (err.code === 11000) {
+      return res.status(400).json({ error: 'Email already registered' });
+    }
     res.status(500).json({ error: err.message });
   }
 };
