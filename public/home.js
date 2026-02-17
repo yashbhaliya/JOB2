@@ -1,4 +1,18 @@
 // Dropdown functionality
+
+fetch("/api/auth/signup", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    name: nameInput.value,
+    email: emailInput.value,
+    password: passwordInput.value
+  })
+})
+
+
 document.addEventListener('DOMContentLoaded', function () {
     // Mobile menu toggle
     const menuToggle = document.querySelector(".menu-toggle");
