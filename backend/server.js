@@ -29,6 +29,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
    STATIC FILES
 ====================== */
 app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use('/img', express.static(path.join(__dirname, '..', 'img')));
 
 /* ======================
    AUTH ROUTES (NEW)
