@@ -667,3 +667,41 @@ function searchJobs(query) {
     
     displayJobs(filteredJobs);
 }
+
+
+// Mobile filter toggle functionality
+const filterToggle = document.getElementById('mobileFilterToggle');
+const filtersSidebar = document.getElementById('filtersSidebar');
+const closeFilterBtn = document.getElementById('closeFilterBtn');
+
+if (filterToggle) {
+    filterToggle.addEventListener('click', function() {
+        filtersSidebar.classList.add('active');
+    });
+}
+
+if (closeFilterBtn) {
+    closeFilterBtn.addEventListener('click', function() {
+        filtersSidebar.classList.remove('active');
+    });
+}
+
+// Close filter when clicking outside
+document.addEventListener('click', function(e) {
+    if (filtersSidebar && filtersSidebar.classList.contains('active')) {
+        if (!e.target.closest('.filters-sidebar') && !e.target.closest('.mobile-filter-toggle')) {
+            filtersSidebar.classList.remove('active');
+        }
+    }
+});
+
+// Apply filters button
+const applyFiltersBtn = document.querySelector('.apply-filters');
+if (applyFiltersBtn) {
+    applyFiltersBtn.addEventListener('click', function() {
+        applyFilters();
+        if (filtersSidebar) {
+            filtersSidebar.classList.remove('active');
+        }
+    });
+}

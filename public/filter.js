@@ -140,6 +140,29 @@ document.addEventListener('DOMContentLoaded', function() {
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', applyFilters);
     });
+
+    // Mobile filter toggle
+    const mobileFilterToggle = document.getElementById('mobileFilterToggle');
+    const filtersSidebar = document.getElementById('filtersSidebar');
+    const closeFilterBtn = document.getElementById('closeFilterBtn');
+
+    if (mobileFilterToggle && filtersSidebar) {
+        mobileFilterToggle.addEventListener('click', () => {
+            filtersSidebar.classList.add('active');
+        });
+    }
+
+    if (closeFilterBtn && filtersSidebar) {
+        closeFilterBtn.addEventListener('click', () => {
+            filtersSidebar.classList.remove('active');
+        });
+    }
+
+    document.addEventListener('click', (e) => {
+        if (filtersSidebar && !e.target.closest('#filtersSidebar') && !e.target.closest('#mobileFilterToggle')) {
+            filtersSidebar.classList.remove('active');
+        }
+    });
 });
 
 function updatePageTitle(category, type, filter) {
@@ -538,6 +561,11 @@ function clearAllFilters() {
         filterSearchInput.value = '';
     }
     
+    const filtersSidebar = document.getElementById('filtersSidebar');
+    if (filtersSidebar) {
+        filtersSidebar.classList.remove('active');
+    }
+    
     showAllJobs();
 }
 
@@ -724,4 +752,16 @@ function searchJobs(query) {
     });
     
     displayJobs(filteredJobs);
+}
+
+// Apply filters button
+const applyFiltersBtn = document.querySelector('.apply-filters');
+if (applyFiltersBtn) {
+    applyFiltersBtn.addEventListener('click', function() {
+        applyFilters();
+        const filtersSidebar = document.getElementById('filtersSidebar');
+        if (filtersSidebar) {
+            filtersSidebar.classList.remove('active');
+        }
+    });
 }

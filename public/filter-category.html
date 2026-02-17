@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="filter-category.css">
+    <link rel="stylesheet" href="filter-category-mobile.css">
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Filter Jobs - Job-Portal</title>
@@ -72,8 +73,18 @@
 
         
         <div class="content-wrapper">
-            <aside class="filters-sidebar">
-                <h3>Filters</h3>
+            <!-- Mobile Filter Toggle Button -->
+            <button class="mobile-filter-toggle" id="mobileFilterToggle">
+                <i class="fas fa-filter"></i> Filters
+            </button>
+            
+            <aside class="filters-sidebar" id="filtersSidebar">
+                <h3>
+                    Filters
+                    <button class="close-filter-btn" id="closeFilterBtn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </h3>
                 
                 <div class="filter-group">
                     <h4>Search</h4>
@@ -113,7 +124,10 @@
                     </div>
                 </div>
                 
-                <button class="clear-filters">Clear All Filters</button>
+                <div class="filter-actions">
+                    <button class="clear-filters">Clear All</button>
+                    <button class="apply-filters">Apply</button>
+                </div>
             </aside>
             
             <div class="jobs-content">
