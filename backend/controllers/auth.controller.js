@@ -35,16 +35,32 @@ exports.signup = async (req, res) => {
 
     const verifyLink = `${process.env.APP_URL || 'https://job-portal-8aak.onrender.com'}/api/auth/verify-email?token=${token}`;
 
-    await transporter.sendMail({
-      from: process.env.MAIL_USER,
-      to: email,
-      subject: 'Verify your email',
-      html: `<a href="${verifyLink}">Verify Email</a>`
-    });
+    console.log('Sending email to:', email);
+    console.log('MAIL_USER:', process.env.MAIL_USER);
+    console.log('MAIL_PASS exists:', !!process.env.MAIL_PASS);
 
-    console.log('Verification email sent to:', email);
+    try {
+      await transporter.sendMail({
+        from: `"Job Portal" <${process.env.MAIL_USER || 'bhaliyayash595@gmail.com'}>`,
+        to: email,
+        subject: 'Verify Your Email - Job Portal',
+        html: `
+          <h2>Welcome to Job Portal!</h2>
+          <p>Hi ${name},</p>
+          <p>Please verify your email by clicking the link below:</p>
+          <a href="${verifyLink}" style="background:#4CAF50;color:white;padding:10px 20px;text-decoration:none;border-radius:5px;display:inline-block;">Verify Email</a>
+          <p>Or copy this link: ${verifyLink}</p>
+          <p>This link expires in 24 hours.</p>
+        `
+      });
+      console.log('Verification email sent to:', email);
+    } catch (mailError) {
+      console.error('Email sending failed:', mailError);
+      await User.findByIdAndDelete(user._id);
+      return res.status(500).json({ error: 'Failed to send verification email. Please try again.' });
+    }
 
-    res.json({ message: 'Verification email sent' });
+    res.json({ message: 'Verification email sent. Please check your inbox.' });
   } catch (err) {
     console.error('Signup error:', err);
     if (err.code === 11000) {
