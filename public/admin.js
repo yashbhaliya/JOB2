@@ -69,7 +69,7 @@ jobForm.addEventListener('submit', async function (e) {
     const title = formData.get('title');
 
     if (!title || title.trim() === "") {
-        alert("Please enter a job title.");
+        showNotification("Please enter a job title.", 'error');
         return;
     }
 
@@ -124,17 +124,39 @@ jobForm.addEventListener('submit', async function (e) {
         console.log('📥 Response data:', responseText);
 
         if (res.ok) {
-            alert(editingJobId ? 'Job updated successfully!' : 'Job posted successfully!');
+            showNotification(editingJobId ? 'Job updated successfully!' : 'Job posted successfully!', 'success');
             await fetchJobs();
             closeJobModal();
         } else {
-            alert(`Error: ${res.status} - ${responseText}`);
+            showNotification(`Error: ${res.status} - ${responseText}`, 'error');
         }
     } catch (err) {
         console.error('Error saving job:', err);
-        alert('Network error: ' + err.message);
+        showNotification('Network error: ' + err.message, 'error');
     }
 });
+
+// Premium notification function
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `premium-notification ${type}`;
+    notification.innerHTML = `
+        <div class="notification-icon">
+            ${type === 'success' ? '✓' : '✕'}
+        </div>
+        <div class="notification-content">
+            <div class="notification-title">${type === 'success' ? 'Success' : 'Error'}</div>
+            <div class="notification-message">${message}</div>
+        </div>
+    `;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => notification.classList.add('show'), 10);
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
 
 // 4. Unified Event Delegation
 document.querySelector('.jobs').addEventListener('click', async function (e) {
@@ -157,8 +179,13 @@ document.querySelector('.jobs').addEventListener('click', async function (e) {
         openJobModal();
     } else if (target.classList.contains('btn-delete')) {
         if (confirm('Are you sure you want to delete this job?')) {
-            await fetch(`http://localhost:5000/api/jobs/${jobId}`, { method: 'DELETE' });
-            fetchJobs();
+            try {
+                await fetch(`http://localhost:5000/api/jobs/${jobId}`, { method: 'DELETE' });
+                showNotification('Job deleted successfully!', 'success');
+                fetchJobs();
+            } catch (err) {
+                showNotification('Error deleting job', 'error');
+            }
         }
     }
 });
@@ -408,7 +435,7 @@ document.getElementById('companyLogoFile').addEventListener('change', function(e
         // Check file size (16MB = 16 * 1024 * 1024 bytes)
         const maxSize = 16 * 1024 * 1024;
         if (file.size > maxSize) {
-            alert('Error: File size exceeds 16MB limit. Please choose a smaller image.');
+            showNotification('File size exceeds 16MB limit. Please choose a smaller image.', 'error');
             e.target.value = ''; // Clear the input
             return;
         }
