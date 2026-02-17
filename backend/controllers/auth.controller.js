@@ -28,9 +28,10 @@ exports.signup = async (req, res) => {
       verificationTokenExpiry: Date.now() + 24 * 60 * 60 * 1000
     });
 
-    const verifyLink = `${process.env.APP_URL}/api/auth/verify-email?token=${token}`;
+    const verifyLink = `${process.env.APP_URL || 'https://job-portal-8aak.onrender.com'}/api/auth/verify-email?token=${token}`;
 
     await transporter.sendMail({
+      from: process.env.MAIL_USER,
       to: email,
       subject: 'Verify your email',
       html: `<a href="${verifyLink}">Verify Email</a>`
@@ -64,7 +65,7 @@ exports.verifyEmail = async (req, res) => {
         <body>
           <h1 class="error">Verification Failed</h1>
           <p>Invalid or expired token</p>
-          <a href="http://localhost:5000">Go to Home</a>
+          <a href="https://job-portal-8aak.onrender.com">Go to Home</a>
         </body>
         </html>
       `);
@@ -88,7 +89,7 @@ exports.verifyEmail = async (req, res) => {
       <body>
         <h1 class="success">Email Verified Successfully!</h1>
         <p>You can now login to your account</p>
-        <a href="http://localhost:5000">Go to Home</a>
+        <a href="https://job-portal-8aak.onrender.com">Go to Home</a>
       </body>
       </html>
     `);
@@ -123,7 +124,7 @@ exports.login = async (req, res) => {
 
     const token = jwt.sign(
       { userId: user._id, email: user.email },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET || 'supersecretkey',
       { expiresIn: '7d' }
     );
     
@@ -137,7 +138,6 @@ exports.login = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 
 exports.forgotPassword = async (req, res) => {
   try {
@@ -155,12 +155,13 @@ exports.forgotPassword = async (req, res) => {
 
     const resetToken = crypto.randomBytes(32).toString('hex');
     user.resetPasswordToken = resetToken;
-    user.resetPasswordExpiry = Date.now() + 3600000; // 1 hour
+    user.resetPasswordExpiry = Date.now() + 3600000;
     await user.save();
 
-    const resetLink = `${process.env.APP_URL}/reset-password.html?token=${resetToken}`;
+    const resetLink = `${process.env.APP_URL || 'https://job-portal-8aak.onrender.com'}/reset-password.html?token=${resetToken}`;
 
     await transporter.sendMail({
+      from: process.env.MAIL_USER,
       to: email,
       subject: 'Password Reset Request',
       html: `<p>Click <a href="${resetLink}">here</a> to reset your password. Link expires in 1 hour.</p>`
@@ -172,7 +173,6 @@ exports.forgotPassword = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 
 exports.resetPassword = async (req, res) => {
   try {
