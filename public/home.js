@@ -114,6 +114,10 @@ async function loadJobs() {
         }
 
         allJobs = await response.json();
+        // Filter out expired jobs (only previous days, not today)
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        allJobs = allJobs.filter(job => !job.expiryDate || new Date(job.expiryDate) >= today);
         displayJobs(allJobs);
     } catch (error) {
         console.error('Error loading jobs:', error);
@@ -248,9 +252,12 @@ function searchJobs(query) {
         return;
     }
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const filteredJobs = allJobs.filter(job => {
         const searchText = query.toLowerCase();
-        return (
+        const isNotExpired = !job.expiryDate || new Date(job.expiryDate) >= today;
+        return isNotExpired && (
             job.title.toLowerCase().includes(searchText) ||
             job.companyName.toLowerCase().includes(searchText) ||
             job.category.toLowerCase().includes(searchText) ||

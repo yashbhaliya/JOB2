@@ -33,14 +33,25 @@ function renderJobs() {
 
     jobsContainer.innerHTML = '';
     jobs.forEach(job => {
+        // Check if job is expired (before today, not including today)
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const expiryDate = job.expiryDate ? new Date(job.expiryDate) : null;
+        const isExpired = expiryDate && expiryDate < today;
+        
         const jobCard = document.createElement('div');
-        jobCard.className = 'job-card';
+        jobCard.className = `job-card ${isExpired ? 'expired' : ''}`;
         jobCard.innerHTML = `
+            ${isExpired ? `<div class="expired-banner">⏰ EXPIRED - ${job.expiryDate}</div>` : ''}
             <div class="job-card-header">
                 ${job.companyLogo && job.companyLogo !== null && job.companyLogo !== 'null' ? `<img src="${job.companyLogo}" alt="Company Logo" class="job-card-logo">` : ''}
                 <div class="job-card-title-section">
                     <h3>${job.title}</h3>
                     <p class="company-name">${job.companyName || 'N/A'}</p>
+                </div>
+                <div class="job-card-badges">
+                    ${job.featured ? '<span class="featured">⭐</span>' : ''}
+                    ${job.urgent ? '<span class="urgent">⚡</span>' : ''}
                 </div>
             </div>
             <p><strong>Category:</strong> ${job.category}</p>
@@ -48,8 +59,6 @@ function renderJobs() {
             <p><strong>Salary:</strong> ${job.minSalary === 'No salary needed' ? 'No salary needed' : `₹${job.minSalary} - ₹${job.maxSalary}`}</p>
             <p><strong>Experience:</strong> ${job.experience}${job.years ? ` (${job.years} years)` : ''}</p>
             <p><strong>Type:</strong> ${Array.isArray(job.employmentTypes) && job.employmentTypes.length > 0 ? job.employmentTypes.join(', ') : 'N/A'}</p>
-            ${job.featured ? '<span class="featured">⭐  </span>' : ''}
-            ${job.urgent ? '<span class="urgent"> ⚡</span>' : ''}
             <div class="actions">
                 <button class="btn-view" data-id="${job._id}">View</button>
                 <button class="btn-edit" data-id="${job._id}">Edit</button>
