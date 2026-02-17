@@ -72,8 +72,10 @@ exports.signup = async (req, res) => {
 
 exports.verifyEmail = async (req, res) => {
   try {
+    const token = req.params.token;
+
     const user = await User.findOne({
-      verificationToken: req.query.token,
+      verificationToken: token,
       verificationTokenExpiry: { $gt: Date.now() }
     });
 
@@ -96,11 +98,12 @@ exports.verifyEmail = async (req, res) => {
         </html>
       `);
     }
-
     user.isVerified = true;
     user.verificationToken = undefined;
     user.verificationTokenExpiry = undefined;
+
     await user.save();
+
 
     res.send(`
       <!DOCTYPE html>
@@ -124,6 +127,43 @@ exports.verifyEmail = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+const crypto = require("crypto");
+
+exports.signup = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    const token = crypto.randomBytes(32).toString("hex");
+
+    const user = new User({
+      name,
+      email,
+      password,
+      verificationToken: token,
+      verificationTokenExpiry: Date.now() + 24 * 60 * 60 * 1000
+    });
+
+    await user.save();
+
+    const verifyURL = `${process.env.BASE_URL}/api/auth/verify-email/${token}`;
+
+    await transporter.sendMail({
+      to: email,
+      subject: "Verify Your Email",
+      html: `
+        <h2>Email Verification</h2>
+        <a href="${verifyURL}">Click here to verify</a>
+      `
+    });
+
+    res.status(201).json({ message: "Verification email sent" });
+
+  } catch (error) {
+    res.status(400).json({ message: "Signup failed" });
+  }
+};
+
 
 exports.login = async (req, res) => {
   try {
@@ -153,11 +193,11 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET || 'supersecretkey',
       { expiresIn: '7d' }
     );
-    
-    res.json({ 
-      message: 'Login success', 
+
+    res.json({
+      message: 'Login success',
       token: token,
-      user: { name: user.name, email: user.email } 
+      user: { name: user.name, email: user.email }
     });
   } catch (err) {
     console.error('Login error:', err);
