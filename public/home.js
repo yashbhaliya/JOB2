@@ -102,7 +102,7 @@ let currentFilteredJobs = [];
 // Fetch and display jobs from MongoDB
 async function loadJobs() {
     try {
-        const response = await fetch('http://localhost:5000/api/jobs', {
+        const response = await fetch(`${API_URL}/api/jobs`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -346,7 +346,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async function(
     };
 
     try {
-        const response = await fetch('http://localhost:5000/api/auth/login', {
+        const response = await fetch(`${API_URL}/api/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -384,7 +384,7 @@ document.getElementById('signupForm')?.addEventListener('submit', async function
     };
 
     try {
-        const response = await fetch('http://localhost:5000/api/auth/signup', {
+        const response = await fetch(`${API_URL}/api/auth/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -518,7 +518,7 @@ document.getElementById('forgotPasswordForm')?.addEventListener('submit', async 
     const email = formData.get('email');
 
     try {
-        const response = await fetch('http://localhost:5000/api/auth/forgot-password', {
+        const response = await fetch(`${API_URL}/api/auth/forgot-password`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email })
