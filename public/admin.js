@@ -40,7 +40,7 @@ function renderJobs() {
         const isExpired = expiryDate && expiryDate < today;
         
         const jobCard = document.createElement('div');
-        jobCard.className = `job-card ${isExpired ? 'expired' : ''}`;
+        jobCard.className = 'job-card';
         jobCard.innerHTML = `
             ${isExpired ? `<div class="expired-banner">⏰ EXPIRED - ${job.expiryDate}</div>` : ''}
             <div class="job-card-header">
